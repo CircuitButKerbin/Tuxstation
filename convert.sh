@@ -96,7 +96,7 @@ write_blame_file() {
 
 setup_linux_edition() {
     STATIONEERS_DATA="$STATIONEERS_PATH/rocketstation_Data"
-    STATIONEERS_MONO="$STATIONEERS_PATH/rocketstation_Data/MonoBleedingEdge"
+    # STATIONEERS_MONO="$STATIONEERS_PATH/rocketstation_Data/MonoBleedingEdge"
     OUTPUT_DATA="$OUTPUT_PATH/rocketstation_Data"
     OUTPUT_MONO="$OUTPUT_PATH/rocketstation_Data/MonoBleedingEdge"
     UNITY_LINUXPLAYER="$CACHE_DIR/Editor/Data/PlaybackEngines/LinuxStandaloneSupport/Variations/linux64_player_nondevelopment_mono"
@@ -161,7 +161,7 @@ setup_linux_edition() {
     file_blame["$OUTPUT_DATA/Managed/$(basename "$DEP_SharpZipLib")"]="$DEP_SharpZipLib"
 
     echo "Updating Game Native Plugins"
-    cp -f "$DEP_Cimgui" "$OUTPUT_DATA/Plugins/"
+    cp -f "$DEP_Cimgui" "$OUTPUT_DATA/Plugins/cimgui.so"
     file_blame["$OUTPUT_DATA/Plugins/$(basename "$DEP_Cimgui")"]="$DEP_Cimgui"
     cp -f "$STATIONEERS_DEDICATED_PATH/rocketstation_DedicatedServer_Data/Plugins/"* "$OUTPUT_DATA/Plugins/"
     for file in "$OUTPUT_DATA/Plugins"/*; do
@@ -177,6 +177,8 @@ setup_linux_edition() {
     cp -r "$DEP_BepInEx/." "$OUTPUT_PATH/"
     cp -rf "$PWD/BepInEx/." "$OUTPUT_PATH/BepInEx"
     mv "$OUTPUT_PATH/BepInEx/run_bepinex.sh" "$OUTPUT_PATH/run_bepinex.sh"
+    mkdir -p "$OUTPUT_PATH/BepInEx/patchers"
+    mkdir -p "$OUTPUT_PATH/BepInEx/plugins"
 
     echo "Installing Tuxstation Patcher..."
     cp -r "$DEP_Tuxstation/Tuxceil.dll" "$OUTPUT_PATH/BepInEx/patchers/"
