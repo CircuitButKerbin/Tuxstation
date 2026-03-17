@@ -112,12 +112,14 @@ setup_linux_edition() {
     echo "Symlinking game resources..."
     mkdir -p "$OUTPUT_PATH/rocketstation_Data"
     # shellcheck disable=SC2034
+
     local excluded_data_subdirs=(
         "Managed"
         "Plugins"
         "MonoBleedingEdge"
         "Resources"
     )
+
     filtered_link "$STATIONEERS_DATA" "$OUTPUT_DATA" excluded_data_subdirs
     for dir in "${excluded_data_subdirs[@]}"; do
         mkdir -p "$OUTPUT_DATA/$dir"
@@ -146,6 +148,7 @@ setup_linux_edition() {
         cp -f "$file" "$OUTPUT_DATA/Managed/"
         file_blame["$OUTPUT_DATA/Managed/$filename"]="$file"
     done
+
     echo "Copying & Setting up Mono runtime libraries..."
     mkdir -p "$OUTPUT_MONO/x86_64"
     mkdir -p "$OUTPUT_MONO/etc"
@@ -164,6 +167,7 @@ setup_linux_edition() {
         cp -f "$file" "$OUTPUT_MONO/x86_64/"
         file_blame["$OUTPUT_MONO/x86_64/$filename"]="$file"
     done
+
     echo "Updating Game Assemblies"
     cp -f "$DEP_SharpZipLib" "$OUTPUT_DATA/Managed/"
     file_blame["$OUTPUT_DATA/Managed/$(basename "$DEP_SharpZipLib")"]="$DEP_SharpZipLib"
@@ -181,6 +185,7 @@ setup_linux_edition() {
             file_blame["$OUTPUT_DATA/Plugins/$filename"]="$STATIONEERS_DEDICATED_PATH/rocketstation_DedicatedServer_Data/Plugins/$filename"
         fi
     done
+    
     mv -f "$OUTPUT_DATA/Plugins/libsteam_api.so" "$OUTPUT_DATA/Plugins/steam_api64.so"
     file_blame["$OUTPUT_DATA/Plugins/steam_api64.so"]="$OUTPUT_DATA/Plugins/libsteam_api.so"
 

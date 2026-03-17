@@ -128,6 +128,7 @@ download_dependencies() {
 }
 
 verify_game_dependencies() {
+    
     if [ ! -d "$STATIONEERS_PATH" ]; then
         echo "Stationeers not found in $STATIONEERS_PATH. Ensure steam is installed and that the path is correct."
         exit 1
