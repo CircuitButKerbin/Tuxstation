@@ -116,6 +116,7 @@ setup_linux_edition() {
         "Managed"
         "Plugins"
         "MonoBleedingEdge"
+        "Resources"
     )
     filtered_link "$STATIONEERS_DATA" "$OUTPUT_DATA" excluded_data_subdirs
     for dir in "${excluded_data_subdirs[@]}"; do
@@ -124,6 +125,13 @@ setup_linux_edition() {
     
     echo "Symlinking game assemblies..."
     link_all "$STATIONEERS_DATA/Managed" "$OUTPUT_DATA/Managed"
+
+    echo "Creating game resources"
+    mkdir -p "$OUTPUT_DATA/Resources"
+    cp -r "$STATIONEERS_DATA/Resources/." "$OUTPUT_DATA/Resources/"
+    file_blame["$OUTPUT_DATA/Resources"]="$STATIONEERS_DATA/Resources"
+    cp -f "$STATIONEERS_DEDICATED_PATH/rocketstation_DedicatedServer_Data/Resources/UnityPlayer.png" "$OUTPUT_DATA/Resources/"
+    file_blame["$OUTPUT_DATA/Resources/UnityPlayer.png"]="$STATIONEERS_DEDICATED_PATH/rocketstation_DedicatedServer_Data/Resources/UnityPlayer.png"
 
     echo "Updating with Linux player assemblies..."
     for file in "$UNITY_LINUXPLAYER/Data/Managed"/*.dll; do
