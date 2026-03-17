@@ -162,7 +162,10 @@ setup_linux_edition() {
 
     echo "Updating Game Native Plugins"
     cp -f "$DEP_Cimgui" "$OUTPUT_DATA/Plugins/cimgui.so"
+    
     file_blame["$OUTPUT_DATA/Plugins/$(basename "$DEP_Cimgui")"]="$DEP_Cimgui"
+    cp -f "$DEP_DiscordGameSDK/lib/x86_64/discord_game_sdk.so" "$OUTPUT_DATA/Plugins/discord_game_sdk.so"
+
     cp -f "$STATIONEERS_DEDICATED_PATH/rocketstation_DedicatedServer_Data/Plugins/"* "$OUTPUT_DATA/Plugins/"
     for file in "$OUTPUT_DATA/Plugins"/*; do
         filename=$(basename "$file")

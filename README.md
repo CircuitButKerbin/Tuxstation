@@ -27,5 +27,5 @@ can't load into worlds, etc.), include the `blame.txt` that is generated in the 
 ## Known issues
 - NixOS requires the game to be ran over steam-run, otherwise Unity can't figure out graphics and will fail to launch. `-force-vulkan` or `-force-glcore` won't resolve the issue
 as Unity will report that Vulkan isn't supported by the system when it most-definitely is.
-- Discord Integration doesn't work. No clue where to find a linux build of the `discord_game_sdk.dll`
+- ~~Discord Integration doesn't work. No clue where to find a linux build of the `discord_game_sdk.dll`~~ Thanks to [laraproto](https://github.com/laraproto) for finding a linux build of the SDK.
 - Z-fighting on some items and Mars on the preview screen. More than likely fixable but I haven't researched into it.

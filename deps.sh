@@ -20,6 +20,9 @@ icsharpziplib_download="https://github.com/icsharpcode/SharpZipLib/releases/down
 tuxstation_version="1.0.0rc1"
 tuxstation_download="https://github.com/CircuitButKerbin/Tuxstation-Patcher/releases/download/v$tuxstation_version/Tuxstation_Patcher-v$tuxstation_version.tar.gz"
 
+discord_game_sdk_version="3.2.1"
+discord_game_sdk_download="https://dl-game-sdk.discordapp.net/$discord_game_sdk_version/discord_game_sdk.zip"
+
 fetch_dependency() {
     local url="$1"
     local output="$2"
@@ -36,6 +39,7 @@ get_dependencies_paths() {
     export DEP_BepInEx="$CACHE_DIR/bepinex_$bepinex_version"
     export DEP_SharpZipLib="$CACHE_DIR/icsharpziplib_$icsharpziplib_version/lib/net45/ICSharpCode.SharpZipLib.dll"
     export DEP_Cimgui="$CACHE_DIR/cimgui_$cimgui_version.so"
+    export DEP_DiscordGameSDK="$CACHE_DIR/discord_game_sdk_$discord_game_sdk_version"
 }
 
 download_dependencies() {
@@ -47,6 +51,7 @@ download_dependencies() {
         fetch_dependency "$bepinex_download" "$CACHE_DIR/bepinex_$bepinex_version.zip"
         fetch_dependency "$icsharpziplib_download" "$CACHE_DIR/icsharpziplib_$icsharpziplib_version.zip"
         fetch_dependency "$tuxstation_download" "$CACHE_DIR/tuxstation_$tuxstation_version.tar.gz"
+        fetch_dependency "$discord_game_sdk_download" "$CACHE_DIR/discord_game_sdk_$discord_game_sdk_version.zip"
     else
         echo "Skipping download..."
     fi
@@ -74,6 +79,14 @@ download_dependencies() {
         echo "Extracting SharpZipLib $icsharpziplib_version..."
         unzip -o "$CACHE_DIR/icsharpziplib_$icsharpziplib_version.zip" -d "$CACHE_DIR/icsharpziplib_$icsharpziplib_version"
     fi
+
+    if [ -d "$CACHE_DIR/discord_game_sdk_$discord_game_sdk_version" ]; then
+        echo "Discord Game SDK $discord_game_sdk_version already extracted, skipping extraction."
+    else
+        echo "Extracting Discord Game SDK $discord_game_sdk_version..."
+        unzip -o "$CACHE_DIR/discord_game_sdk_$discord_game_sdk_version.zip" -d "$CACHE_DIR/discord_game_sdk_$discord_game_sdk_version"
+    fi
+    export DEP_DiscordGameSDK="$CACHE_DIR/discord_game_sdk_$discord_game_sdk_version"
 
     if [ -d "$CACHE_DIR/tuxstation_$tuxstation_version" ]; then
         echo "Tuxstation Patcher $tuxstation_version already extracted, skipping extraction."
