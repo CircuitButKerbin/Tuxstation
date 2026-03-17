@@ -185,7 +185,7 @@ setup_linux_edition() {
             file_blame["$OUTPUT_DATA/Plugins/$filename"]="$STATIONEERS_DEDICATED_PATH/rocketstation_DedicatedServer_Data/Plugins/$filename"
         fi
     done
-    
+
     mv -f "$OUTPUT_DATA/Plugins/libsteam_api.so" "$OUTPUT_DATA/Plugins/steam_api64.so"
     file_blame["$OUTPUT_DATA/Plugins/steam_api64.so"]="$OUTPUT_DATA/Plugins/libsteam_api.so"
 
@@ -213,5 +213,6 @@ setup_linux_edition() {
     write_blame_file
 }
 
+#test
 
 setup_linux_edition
