@@ -17,6 +17,9 @@ bepinex_download="https://github.com/icsharpcode/SharpZipLib/releases/download/v
 icsharpziplib_version="1.0.0"
 icsharpziplib_download="https://github.com/icsharpcode/SharpZipLib/releases/download/v$icsharpziplib_version/SharpZipLib.$icsharpziplib_version.nupkg"
 
+tuxstation_version="1.0.0rc1"
+tuxstation_download="https://github.com/CircuitButKerbin/Tuxstation-Patcher/releases/download/v$tuxstation_version/Tuxstation_Patcher-v$tuxstation_version.tar.gz"
+
 fetch_dependency() {
     local url="$1"
     local output="$2"
@@ -43,6 +46,7 @@ download_dependencies() {
         fetch_dependency "$cimgui_download" "$CACHE_DIR/cimgui_$cimgui_version.so"
         fetch_dependency "$bepinex_download" "$CACHE_DIR/bepinex_$bepinex_version.zip"
         fetch_dependency "$icsharpziplib_download" "$CACHE_DIR/icsharpziplib_$icsharpziplib_version.zip"
+        fetch_dependency "$tuxstation_download" "$CACHE_DIR/tuxstation_$tuxstation_version.tar.gz"
     else
         echo "Skipping download..."
     fi
@@ -70,6 +74,16 @@ download_dependencies() {
         echo "Extracting SharpZipLib $icsharpziplib_version..."
         unzip -o "$CACHE_DIR/icsharpziplib_$icsharpziplib_version.zip" -d "$CACHE_DIR/icsharpziplib_$icsharpziplib_version"
     fi
+
+    if [ -d "$CACHE_DIR/tuxstation_$tuxstation_version" ]; then
+        echo "Tuxstation Patcher $tuxstation_version already extracted, skipping extraction."
+    else
+        echo "Extracting Tuxstation Patcher $tuxstation_version..."
+        mkdir -p "$CACHE_DIR/Tuxstation_Patcher-v$tuxstation_version"
+        tar -xzf "$CACHE_DIR/tuxstation_$tuxstation_version.tar.gz" -C "$CACHE_DIR/Tuxstation_Patcher-v$tuxstation_version"
+    fi
+    export DEP_Tuxstation="$CACHE_DIR/Tuxstation_Patcher-v$tuxstation_version"
+
     export DEP_SharpZipLib="$CACHE_DIR/icsharpziplib_$icsharpziplib_version/lib/net45/ICSharpCode.SharpZipLib.dll"
     
     if [ ! -f "$DEP_Cimgui" ]; then
@@ -89,6 +103,11 @@ download_dependencies() {
 
     if [ ! -f "$DEP_SharpZipLib" ]; then
         echo "Error: SharpZipLib dependency not found at $DEP_SharpZipLib"
+        exit 1
+    fi
+
+    if [ ! -d "$DEP_Tuxstation" ]; then
+        echo "Error: Tuxstation Patcher dependency not found at $DEP_Tuxstation"
         exit 1
     fi
 
